@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     };
     // 读取现有房源
     const listings = await getListingsFromR2();
-    listings.push(newListing);
+    listings.push(newListing as unknown as Record<string, unknown>);
     await saveListingsToR2(listings);
     return NextResponse.json({ success: true, listing: newListing });
   } catch (err) {

@@ -54,7 +54,7 @@ export default function SubmitListingForm() {
       } else {
         setError(result.error || '提交失败');
       }
-    } catch (err) {
+    } catch {
       setError('网络错误或服务器异常');
     }
     setLoading(false);

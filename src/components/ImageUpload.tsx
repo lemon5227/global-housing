@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 
 interface ImageUploadProps {
   onUpload: (urls: string[]) => void;
@@ -98,7 +99,7 @@ export default function ImageUpload({ onUpload }: ImageUploadProps) {
           setError(result.error || '上传失败');
           break;
         }
-      } catch (err) {
+      } catch {
         setError('网络错误或服务器异常');
         break;
       }
@@ -158,9 +159,11 @@ export default function ImageUpload({ onUpload }: ImageUploadProps) {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {files.map((file, index) => (
               <div key={index} className="relative group">
-                <img
+                <Image
                   src={URL.createObjectURL(file)}
                   alt={`预览 ${index + 1}`}
+                  width={96}
+                  height={96}
                   className="w-full h-24 object-cover rounded-lg border"
                 />
                 <button
@@ -204,9 +207,11 @@ export default function ImageUpload({ onUpload }: ImageUploadProps) {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {uploadedUrls.map((url, index) => (
               <div key={index} className="relative">
-                <img
+                <Image
                   src={url}
                   alt={`已上传 ${index + 1}`}
+                  width={96}
+                  height={96}
                   className="w-full h-24 object-cover rounded-lg border border-green-200"
                 />
                 <div className="absolute top-1 right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">

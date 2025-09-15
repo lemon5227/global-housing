@@ -7,7 +7,7 @@ const sheets = google.sheets('v4');
 
 // Load service account key from config folder
 const keyFilePath = path.join(process.cwd(), 'config', 'service-account-key.json');
-const auth: any = fs.existsSync(keyFilePath)
+const auth = fs.existsSync(keyFilePath)
   ? new google.auth.GoogleAuth({
       keyFile: keyFilePath,
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],

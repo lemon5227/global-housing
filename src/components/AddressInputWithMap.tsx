@@ -20,7 +20,7 @@ if (typeof window !== 'undefined') {
 // 修复 Leaflet 默认图标问题
 if (typeof window !== 'undefined') {
   import('leaflet').then((L) => {
-    delete (L.Icon.Default.prototype as any)._getIconUrl;
+    delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
       iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -42,7 +42,7 @@ function MapWithEvents({ onLocationSelect, markerPosition, zoomToPosition }: {
   markerPosition: [number, number] | null;
   zoomToPosition: [number, number] | null;
 }) {
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<L.Map | null>(null);
   const onLocationSelectRef = useRef(onLocationSelect);
 
   // 更新引用
@@ -53,7 +53,7 @@ function MapWithEvents({ onLocationSelect, markerPosition, zoomToPosition }: {
       const map = mapRef.current;
 
       // 添加点击事件监听器
-      const handleClick = (e: any) => {
+      const handleClick = (e: L.LeafletMouseEvent) => {
         onLocationSelectRef.current(e.latlng.lat, e.latlng.lng);
       };
 
@@ -121,7 +121,13 @@ export default function AddressInputWithMap({
   const [isLoaded, setIsLoaded] = useState(false);
   const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
   const [zoomToPosition, setZoomToPosition] = useState<[number, number] | null>(null);
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<Array<{
+    place_id: string;
+    display_name: string;
+    lat: string;
+    lon: string;
+    type?: string;
+  }>>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState<NodeJS.Timeout | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -168,7 +174,15 @@ export default function AddressInputWithMap({
 
       // 更智能的过滤和排序
       const filteredResults = results
-        .filter((result: any) => {
+        .filter((result: {
+          display_name?: string;
+          type?: string;
+          class?: string;
+          place_id: string;
+          lat: string;
+          lon: string;
+          importance?: number;
+        }) => {
           if (!result.display_name) return false;
           
           const displayName = result.display_name.toLowerCase();
@@ -189,7 +203,13 @@ export default function AddressInputWithMap({
                  result.class === 'place' ||
                  (result.importance && result.importance > 0.3);
         })
-        .sort((a: any, b: any) => {
+        .sort((a: {
+          display_name: string;
+          importance?: number;
+        }, b: {
+          display_name: string;
+          importance?: number;
+        }) => {
           const aName = a.display_name.toLowerCase();
           const bName = b.display_name.toLowerCase();
           const queryLower = query.toLowerCase();
@@ -231,7 +251,7 @@ export default function AddressInputWithMap({
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
       );
-      const result = await response.json();
+      const result: { display_name?: string } = await response.json();
       if (result && result.display_name) {
         onChange(result.display_name, { lat, lng });
       }
@@ -240,7 +260,11 @@ export default function AddressInputWithMap({
     }
   };
 
-  const handleAddressSelect = (result: any) => {
+  const handleAddressSelect = (result: {
+    display_name: string;
+    lat: string;
+    lon: string;
+  }) => {
     console.log('选择地址:', result); // 调试日志
     
     const lat = parseFloat(result.lat);
@@ -423,7 +447,7 @@ export default function AddressInputWithMap({
               <svg className="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <p className="text-sm">未找到包含 "{value}" 的地址</p>
+              <p className="text-sm">未找到包含 &quot;{value}&quot; 的地址</p>
               <p className="text-xs mt-1">尝试输入更具体的地址信息</p>
             </div>
           </div>

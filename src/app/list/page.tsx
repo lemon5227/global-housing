@@ -3,7 +3,8 @@ import { Listing } from '@/types/listing';
 import PhotoCarousel from '@/components/PhotoCarousel';
 
 export default async function ListPage() {
-  const listings: Listing[] = await getListingsFromR2();
+  const rawListings = await getListingsFromR2();
+  const listings: Listing[] = rawListings as unknown as Listing[];
 
   return (
     <div className="min-h-full bg-transparent relative overflow-hidden">
