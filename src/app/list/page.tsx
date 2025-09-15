@@ -6,6 +6,8 @@ export default async function ListPage() {
   const rawListings = await getListingsFromR2();
   const listings: Listing[] = rawListings as unknown as Listing[];
 
+  console.log(`列表页面获取到 ${listings.length} 条房源数据`);
+
   return (
     <div className="min-h-full bg-transparent relative overflow-hidden">
       {/* 背景装饰图案 */}
