@@ -1,12 +1,52 @@
-import { getListingsFromR2 } from '@/lib/r2Listings';
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Listing } from '@/types/listing';
 import PhotoCarousel from '@/components/PhotoCarousel';
 
-export default async function ListPage() {
-  const rawListings = await getListingsFromR2();
-  const listings: Listing[] = rawListings as unknown as Listing[];
+export default function ListPage() {
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  console.log(`列表页面获取到 ${listings.length} 条房源数据`);
+  const fetchListings = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      console.log('正在获取房源数据...');
+      
+      // 每次都重新请求，不使用缓存
+      const response = await fetch('/api/listings', {
+        method: 'GET',
+        cache: 'no-cache',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error('获取房源数据失败');
+      }
+      
+      const data = await response.json();
+      setListings(data.listings || []);
+      console.log(`成功获取 ${data.listings?.length || 0} 条房源数据`);
+    } catch (err) {
+      console.error('获取房源失败:', err);
+      setError(err instanceof Error ? err.message : '获取房源失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchListings();
+  }, []);
+
+  // 刷新函数，供手动刷新使用
+  const handleRefresh = () => {
+    fetchListings();
+  };
 
   return (
     <div className="min-h-full bg-transparent relative overflow-hidden">
@@ -35,12 +75,58 @@ export default async function ListPage() {
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 dark:from-purple-400 dark:via-pink-400 dark:to-blue-400 bg-clip-text text-transparent mb-6">
               房源列表
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
               发现适合你的租房选择，与留学生社区一起找到理想家园
             </p>
+            
+            {/* 刷新按钮 */}
+            <button
+              onClick={handleRefresh}
+              disabled={loading}
+              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium rounded-xl transition-all transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  获取中...
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  刷新房源
+                </>
+              )}
+            </button>
           </div>
 
-          {listings.length === 0 ? (
+          {/* 错误提示 */}
+          {error && (
+            <div className="mb-8 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4">
+              <div className="flex items-center">
+                <svg className="w-5 h-5 text-red-600 dark:text-red-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-red-800 dark:text-red-200 font-medium">{error}</span>
+              </div>
+            </div>
+          )}
+
+          {loading ? (
+            <div className="text-center py-20">
+              <div className="inline-flex items-center">
+                <svg className="animate-spin h-8 w-8 text-blue-600 mr-3" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span className="text-xl text-gray-600 dark:text-gray-300">正在加载房源...</span>
+              </div>
+            </div>
+          ) : listings.length === 0 ? (
             <div className="text-center py-20">
               <div className="glass-card-strong rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl w-32 h-32">
                 <svg className="w-16 h-16 text-slate-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

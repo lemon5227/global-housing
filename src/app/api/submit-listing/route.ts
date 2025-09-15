@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getListingsFromR2, saveListingsToR2 } from '@/lib/r2Listings';
 import { Listing } from '@/types/listing';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,6 +28,12 @@ export async function POST(req: NextRequest) {
     const listings = await getListingsFromR2();
     listings.push(newListing as unknown as Record<string, unknown>);
     await saveListingsToR2(listings);
+    
+    // 重新验证列表页面缓存
+    revalidatePath('/list');
+    revalidatePath('/');
+    
+    console.log('新房源已提交，缓存已清理');
     return NextResponse.json({ success: true, listing: newListing });
   } catch (err) {
     return NextResponse.json({ error: '提交失败', detail: String(err) }, { status: 500 });
