@@ -1,26 +1,270 @@
+/* 底部卡片主题文字专用颜色修正 */
+.theme-card-title {
+  color: #222 !important;
+}
+.dark .theme-card-title {
+  color: #fff !important;
+}
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 日间模式：温暖奶茶艺术系 - 和谐雅致 */
+  --background: linear-gradient(135deg, 
+    #faf8f5 0%,     /* 温暖象牙白 */
+    #f5f0ea 25%,    /* 淡奶茶色 */
+    #ede5dd 50%,    /* 中性米色 */
+    #e8ddd4 75%,    /* 深奶茶色 */
+    #e2d5c7 100%    /* 暖驼色 */
+  );
+  --foreground: #3c2e26;           /* 深可可色文字 - 温暖且高对比 */
+  --card-bg: rgba(248, 243, 236, 0.95);      /* 奶白卡片 - 优雅透明 */
+  --card-border: rgba(196, 174, 154, 0.4);   /* 浅驼色边框 */
+  --glass-bg: rgba(248, 243, 236, 0.85);     /* 毛玻璃背景 */
+  --glass-border: rgba(196, 174, 154, 0.6);  /* 毛玻璃边框 */
+  --accent-primary: #d4926f;       /* 主色调：暖橘棕 */
+  --accent-secondary: #a8856b;     /* 次色调：深驼色 */
+  --text-muted: #6b5b4f;          /* 辅助文字：中性棕 */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  /* 夜间模式：深邃蓝紫艺术系 - 神秘优雅 */
+  --background: linear-gradient(135deg, 
+    #0a0b0f 0%,     /* 深墨蓝 */
+    #1a1d29 25%,    /* 暗夜蓝 */
+    #252938 50%,    /* 中灰蓝 */
+    #2d3348 75%,    /* 蓝灰色 */
+    #364057 100%    /* 浅蓝灰 */
+  );
+  --foreground: #e8eaed;           /* 月光白文字 */
+  --card-bg: rgba(42, 48, 66, 0.85);         /* 深蓝灰卡片 */
+  --card-border: rgba(79, 89, 118, 0.6);     /* 中蓝灰边框 */
+  --glass-bg: rgba(42, 48, 66, 0.75);        /* 毛玻璃背景 */
+  --glass-border: rgba(79, 89, 118, 0.8);    /* 毛玻璃边框 */
+  --accent-primary: #7c9cdb;       /* 主色调：柔和蓝 */
+  --accent-secondary: #5b7bb8;     /* 次色调：深蓝 */
+  --text-muted: #a8b3c7;          /* 辅助文字：浅蓝灰 */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--background);
+  background-attachment: fixed;
+  transition: background 0.8s ease;
+  min-height: 100vh;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: transparent;
+  color: var(--foreground) !important;
   font-family: Arial, Helvetica, sans-serif;
+  transition: color 0.3s ease;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* 日间模式覆盖所有灰色文本类，统一为深可可色 */
+:root .text-gray-600,
+:root .text-gray-500,
+:root .text-gray-400,
+:root .text-gray-300,
+:root .text-gray-200,
+:root .text-gray-700,
+:root .text-slate-600,
+:root .text-slate-500,
+:root .text-slate-400,
+:root .text-slate-300,
+:root .text-slate-200,
+:root .text-slate-700,
+:root .text-slate-900,
+:root .text-white {
+  color: var(--foreground) !important;
+}
+
+/* 深色模式下的文字颜色覆盖 */
+.dark .text-slate-600,
+.dark .text-slate-500,
+.dark .text-slate-400,
+.dark .text-slate-300,
+.dark .text-slate-200,
+.dark .text-slate-700,
+.dark .text-slate-900,
+.dark .text-white {
+  color: var(--foreground) !important;
+}
+
+/* 占位符颜色调整 */
+:root input::placeholder,
+:root textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* 确保所有输入框和选择框在日间模式下有正确的背景和文字颜色 */
+:root input:not([type="checkbox"]):not([type="radio"]),
+:root textarea,
+:root select {
+  background-color: white !important;
+  color: var(--foreground) !important;
+}
+
+/* 确保标签文字在日间模式下清晰可见 */
+:root label {
+  color: var(--foreground) !important;
+}
+
+/* 占位符颜色更深，提升输入框可读性 */
+:root input::placeholder,
+:root textarea::placeholder {
+  color: rgba(0,0,0,0.7);
+}
+
+/* 日间模式覆盖常见浅色文本类，避免灰色文本影响可读性 */
+:root .text-gray-600,
+:root .text-gray-500,
+:root .text-gray-400,
+:root .text-gray-300,
+:root .text-gray-200,
+:root .text-gray-700,
+:root .text-gray-900 {
+  color: var(--foreground) !important;
+}
+
+/* 深色模式下的灰色文字颜色覆盖 */
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-gray-400,
+.dark .text-gray-300,
+.dark .text-gray-200,
+.dark .text-gray-700,
+.dark .text-gray-900 {
+  color: var(--foreground) !important;
+}
+.dark .text-gray-500,
+.dark .text-gray-400,
+.dark .text-gray-300,
+.dark .text-gray-200,
+.dark .text-gray-700,
+.dark .text-gray-900 {
+  color: var(--foreground) !important;
+}
+
+/* 占位符颜色更深，提升输入框可读性 */
+:root input::placeholder,
+:root textarea::placeholder {
+  color: rgba(0,0,0,0.6);
+}
+
+/* 毛玻璃效果类 */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card-strong {
+  background: var(--card-bg);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* 增强的毛玻璃悬停效果 */
+.glass-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-hover:hover {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent-primary);
+}
+
+.dark .glass-hover:hover {
+  background: var(--card-bg);
+  border-color: var(--accent-primary);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* 自定义渐变背景 - 艺术感配色 */
+.gradient-bg {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+}
+
+.gradient-bg-alt {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.gradient-bg-subtle {
+  background: linear-gradient(135deg, var(--glass-bg) 0%, var(--card-bg) 100%);
+}
+
+/* 动画效果 */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+}
+
+@keyframes slide-in {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.slide-in {
+  animation: slide-in 0.6s ease-out;
+}
+
+/* 自定义滚动条 - 配合主题色彩 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--glass-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* 玻璃态效果 - 使用主题变量 */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-dark {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
 }
