@@ -343,7 +343,7 @@ export default function AddressInputWithMap({
           onChange={handleInputChange}
           required={required}
           placeholder={placeholder}
-          className="w-full px-4 py-3 rounded-xl border border-amber-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-slate-900 dark:text-white transition-all"
+          className="w-full px-4 py-3 rounded-xl border border-amber-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-slate-900 dark:text-black transition-all dark-text-force"
         />
       </div>
     );
@@ -360,7 +360,7 @@ export default function AddressInputWithMap({
           onChange={handleInputChange}
           required={required}
           placeholder={placeholder}
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all"
+          className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-slate-900 dark:text-black transition-all dark-text-force"
           autoComplete="off"
         />
 

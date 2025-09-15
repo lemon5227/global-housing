@@ -102,7 +102,7 @@ export default function SubmitListingForm() {
                   required
                   placeholder="500"
                   min="0"
-                  className="w-full pl-4 pr-12 py-3 rounded-xl border border-amber-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-all"
+                  className="w-full pl-4 pr-12 py-3 rounded-xl border border-amber-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-black transition-all dark-text-force"
                 />
                 <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-amber-600 dark:text-slate-400 font-medium">€</span>
               </div>
@@ -118,7 +118,7 @@ export default function SubmitListingForm() {
                 value={form.roomType}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 rounded-xl border border-amber-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-amber-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:!text-black transition-all dark-text-force"
               >
                 <option value="">请选择房型</option>
                 <option value="单人间">单人间</option>
@@ -154,7 +154,7 @@ export default function SubmitListingForm() {
               onChange={handleChange}
               required
               placeholder="邮箱或电话号码"
-              className="w-full px-4 py-3 rounded-xl border border-emerald-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-emerald-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-black transition-all dark-text-force"
             />
           </div>
         </div>
@@ -209,7 +209,7 @@ export default function SubmitListingForm() {
               onChange={handleChange}
               rows={4}
               placeholder="请描述房源的详细情况，如房间大小、家具配备、交通便利性、周边设施等..."
-              className="w-full px-4 py-3 rounded-xl border border-orange-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-white transition-all resize-none"
+              className="w-full px-4 py-3 rounded-xl border border-orange-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:!text-black transition-all resize-none dark-text-force"
             />
           </div>
         </div>

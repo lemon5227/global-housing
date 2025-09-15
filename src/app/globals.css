@@ -111,6 +111,44 @@ body {
   color: var(--foreground) !important;
 }
 
+/* 夜间模式下输入框使用黑色文字，提高可读性 */
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark textarea,
+.dark select {
+  color: #000000 !important;
+}
+
+/* 夜间模式下select选项也使用黑色文字 */
+.dark select option {
+  background-color: #475569 !important; /* 深灰背景 */
+  color: #000000 !important; /* 黑色文字 */
+}
+
+/* 更强优先级：覆盖所有可能的文字颜色样式 */
+.dark input[type="text"],
+.dark input[type="number"], 
+.dark input[type="email"],
+.dark input[type="tel"],
+.dark textarea,
+.dark select {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* 特别针对 Tailwind 的 text- 类 */
+.dark .text-slate-900,
+.dark .text-gray-900,
+.dark .text-white {
+  color: #000000 !important;
+}
+
+/* 强制黑色文本类 - 最高优先级 */
+.dark .dark-text-force,
+.dark .dark-text-force * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
 /* 确保标签文字在日间模式下清晰可见 */
 :root label {
   color: var(--foreground) !important;
