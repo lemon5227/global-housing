@@ -106,7 +106,7 @@ export default function PhotoCarousel({ photos, alt }: PhotoCarouselProps) {
               console.log('图片被点击，准备打开大图');
               openModal();
             }}
-            onError={(e) => {
+            onError={() => {
               console.log('图片加载失败:', getDriveImageUrl(photos[currentIndex]));
               // 标记当前图片为失败
               setFailedImages(prev => new Set(prev).add(currentIndex));

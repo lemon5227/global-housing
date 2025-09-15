@@ -60,11 +60,11 @@ export async function getListingsFromR2(): Promise<Array<Record<string, unknown>
       createdAt: listing.createdAt || new Date().toISOString(),
       updatedAt: listing.updatedAt || new Date().toISOString(),
     }));
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('从 R2 获取房源数据失败:', error);
     
     // 如果是因为文件不存在，自动创建一个空的 listings.json
-    if (error.Code === 'NoSuchKey') {
+    if (error && typeof error === 'object' && 'Code' in error && error.Code === 'NoSuchKey') {
       console.log('检测到 listings.json 文件不存在，正在创建空文件...');
       try {
         await saveListingsToR2([]);
