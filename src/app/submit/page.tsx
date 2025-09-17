@@ -1,6 +1,9 @@
+"use client";
 import SubmitListingForm from '@/components/SubmitListingForm';
+import { useI18n } from '@/i18n/useI18n';
 
 export default function SubmitPage() {
+  const { t } = useI18n();
   return (
     <div className="min-h-full bg-transparent relative overflow-hidden">
       {/* 背景装饰图案 */}
@@ -24,13 +27,13 @@ export default function SubmitPage() {
           {/* 页面标题 */}
           <div className="text-center mb-12">
             <div className="glass-card rounded-full px-6 py-2 mb-6">
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-200">📝 分享你的房源信息</span>
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-200">📝 {t('submit.badge')}</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 via-blue-600 to-indigo-600 dark:from-emerald-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent mb-6">
-              提交房源信息
+              {t('submit.title')}
             </h1>
             <p className="text-xl text-slate-700 dark:text-slate-200 max-w-2xl mx-auto">
-              帮助其他留学生找到合适的住房，一起构建互助社区
+              {t('submit.subtitle')}
             </p>
           </div>
 
@@ -44,7 +47,7 @@ export default function SubmitPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white">提交指南</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{t('submit.guide.title')}</h3>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -54,8 +57,8 @@ export default function SubmitPage() {
                     <span className="text-white font-bold text-sm">1</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">详细地址信息</h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm">提供完整的街道、城市、邮编等地址信息</p>
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{t('submit.guide.1.title')}</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">{t('submit.guide.1.desc')}</p>
                   </div>
                 </div>
 
@@ -64,8 +67,8 @@ export default function SubmitPage() {
                     <span className="text-white font-bold text-sm">2</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">完整价格信息</h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm">包含月租、押金、其他费用等详细价格</p>
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{t('submit.guide.2.title')}</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">{t('submit.guide.2.desc')}</p>
                   </div>
                 </div>
 
@@ -74,8 +77,8 @@ export default function SubmitPage() {
                     <span className="text-white font-bold text-sm">3</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">房屋详细描述</h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm">描述房间数量、家具配备、交通便利性等</p>
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{t('submit.guide.3.title')}</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">{t('submit.guide.3.desc')}</p>
                   </div>
                 </div>
               </div>
@@ -86,8 +89,8 @@ export default function SubmitPage() {
                     <span className="text-white font-bold text-sm">4</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">高清房屋照片</h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm">上传清晰的房屋内部和外部照片</p>
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{t('submit.guide.4.title')}</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">{t('submit.guide.4.desc')}</p>
                   </div>
                 </div>
 
@@ -96,8 +99,8 @@ export default function SubmitPage() {
                     <span className="text-white font-bold text-sm">5</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">联系方式（可选）</h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm">方便其他同学咨询详细信息</p>
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{t('submit.guide.5.title')}</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">{t('submit.guide.5.desc')}</p>
                   </div>
                 </div>
 
@@ -106,8 +109,8 @@ export default function SubmitPage() {
                     <span className="text-white font-bold text-sm">6</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">信息准确性</h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm">确保所有信息准确，避免误导他人</p>
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-1">{t('submit.guide.6.title')}</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">{t('submit.guide.6.desc')}</p>
                   </div>
                 </div>
               </div>

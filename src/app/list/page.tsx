@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useI18n } from '@/i18n/useI18n';
 import { Listing } from '@/types/listing';
 import PhotoCarousel from '@/components/PhotoCarousel';
 
 export default function ListPage() {
+  const { t, locale } = useI18n();
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -13,7 +15,7 @@ export default function ListPage() {
     try {
       setLoading(true);
       setError(null);
-      console.log('正在获取房源数据...');
+  console.log(t('list.loading'));
       
       // 每次都重新请求，不使用缓存
       const response = await fetch('/api/listings', {
@@ -25,15 +27,15 @@ export default function ListPage() {
       });
       
       if (!response.ok) {
-        throw new Error('获取房源数据失败');
+  throw new Error(t('list.error') || 'Failed to fetch listings');
       }
       
       const data = await response.json();
       setListings(data.listings || []);
-      console.log(`成功获取 ${data.listings?.length || 0} 条房源数据`);
+  console.log(`Fetched ${data.listings?.length || 0} listings`);
     } catch (err) {
-      console.error('获取房源失败:', err);
-      setError(err instanceof Error ? err.message : '获取房源失败');
+  console.error('Failed to fetch listings:', err);
+  setError(err instanceof Error ? err.message : (t('list.error') || 'Failed to fetch listings'));
     } finally {
       setLoading(false);
     }
@@ -70,13 +72,13 @@ export default function ListPage() {
           {/* 页面标题 */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-6 py-2 mb-6 border border-gray-200/50 dark:border-gray-700/50">
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-300">🏠 发现优质房源</span>
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-300">🏠 {t('list.subtitle')}</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 dark:from-purple-400 dark:via-pink-400 dark:to-blue-400 bg-clip-text text-transparent mb-6">
-              房源列表
+              {t('list.title')}
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
-              发现适合你的租房选择，与留学生社区一起找到理想家园
+              {t('list.subtitle')}
             </p>
             
             {/* 刷新按钮 */}
@@ -91,14 +93,14 @@ export default function ListPage() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  获取中...
+                  {t('list.loading')}
                 </>
               ) : (
                 <>
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
-                  刷新房源
+                  {t('list.refresh')}
                 </>
               )}
             </button>
@@ -123,7 +125,7 @@ export default function ListPage() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span className="text-xl text-gray-600 dark:text-gray-300">正在加载房源...</span>
+                <span className="text-xl text-gray-600 dark:text-gray-300">{t('list.loading')}</span>
               </div>
             </div>
           ) : listings.length === 0 ? (
@@ -134,11 +136,9 @@ export default function ListPage() {
                 </svg>
               </div>
               <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-4">
-                暂无房源信息
+                {t('list.empty')}
               </h2>
-              <p className="text-slate-700 dark:text-slate-200 mb-8 text-lg">
-                请稍后再试，或成为第一个分享房源的人！
-              </p>
+              <p className="text-slate-700 dark:text-slate-200 mb-8 text-lg">{t('list.empty')}</p>
               <a
                 href="/submit"
                 className="inline-flex items-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
@@ -146,7 +146,7 @@ export default function ListPage() {
                 <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                提交房源
+                {t('nav.publish')}
               </a>
             </div>
           ) : (
@@ -169,7 +169,7 @@ export default function ListPage() {
                       </h2>
                       <div className="flex flex-col items-end space-y-2">
                         <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">
-                          房源
+                          {t('nav.list')}
                         </span>
                         {listing.roomType && (
                           <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
@@ -181,9 +181,9 @@ export default function ListPage() {
 
                     <div className="mb-4">
                       <span className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                        €{listing.price}
+                        {t('currency.eur')}{listing.price}
                       </span>
-                      <span className="text-gray-500 dark:text-gray-400">/月</span>
+                      <span className="text-gray-500 dark:text-gray-400">{t('list.perMonth')}</span>
                     </div>
 
                     <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
@@ -201,13 +201,13 @@ export default function ListPage() {
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        更新于 {listing.updatedAt ? new Date(listing.updatedAt).toLocaleString('zh-CN', {
+                        {t('updatedAt', { date: '' }) || 'Updated at'} {listing.updatedAt ? new Date(listing.updatedAt).toLocaleString(locale === 'zh' ? 'zh-CN' : 'en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
                           hour: '2-digit',
                           minute: '2-digit'
-                        }) : '未知时间'}
+                        }) : (t('unknownTime') || 'Unknown')}
                       </div>
                     </div>
                   </div>

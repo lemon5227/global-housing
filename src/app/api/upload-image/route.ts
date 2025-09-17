@@ -13,28 +13,52 @@ const BUCKET = process.env.CLOUDFLARE_R2_BUCKET!;
 const PUBLIC_URL = process.env.CLOUDFLARE_R2_PUBLIC_URL!;
 
 export async function POST(req: NextRequest) {
+  // 读取语言（优先 cookie，其次 Accept-Language）
+  const cookieLocale = req.cookies.get('locale')?.value;
+  const accept = req.headers.get('accept-language') || '';
+  const pref = cookieLocale || accept.split(',')[0] || 'zh';
+  const lang: 'zh' | 'en' = pref.startsWith('en') ? 'en' : 'zh';
+  const msg = {
+    zh: {
+      configError: '服务器配置错误',
+      noFile: '未收到文件',
+      onlyImages: '只支持图片文件',
+      fileTooLarge: '图片大小不能超过 5MB',
+      uploadFailed: '上传失败',
+      unknownError: '未知错误'
+    },
+    en: {
+      configError: 'Server configuration error',
+      noFile: 'No file received',
+      onlyImages: 'Only image files are supported',
+      fileTooLarge: 'Image size must not exceed 5MB',
+      uploadFailed: 'Upload failed',
+      unknownError: 'Unknown error'
+    }
+  } as const;
+  const tt = msg[lang];
   try {
     // 检查环境变量
     if (!BUCKET || !PUBLIC_URL) {
       console.error('Missing environment variables:', { BUCKET: !!BUCKET, PUBLIC_URL: !!PUBLIC_URL });
-      return NextResponse.json({ error: '服务器配置错误' }, { status: 500 });
+      return NextResponse.json({ error: tt.configError }, { status: 500 });
     }
 
     const formData = await req.formData();
     const file = formData.get('file') as File;
 
     if (!file) {
-      return NextResponse.json({ error: '未收到文件' }, { status: 400 });
+      return NextResponse.json({ error: tt.noFile }, { status: 400 });
     }
 
     // 验证文件类型
     if (!file.type.startsWith('image/')) {
-      return NextResponse.json({ error: '只支持图片文件' }, { status: 400 });
+      return NextResponse.json({ error: tt.onlyImages }, { status: 400 });
     }
 
     // 验证文件大小 (5MB)
     if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: '图片大小不能超过 5MB' }, { status: 400 });
+      return NextResponse.json({ error: tt.fileTooLarge }, { status: 400 });
     }
 
     const arrayBuffer = await file.arrayBuffer();
@@ -57,8 +81,8 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json({
-      error: '上传失败',
-      details: error instanceof Error ? error.message : '未知错误'
+      error: tt.uploadFailed,
+      details: error instanceof Error ? error.message : tt.unknownError
     }, { status: 500 });
   }
 }

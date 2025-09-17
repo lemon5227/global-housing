@@ -1,6 +1,9 @@
+"use client";
 import Link from 'next/link';
+import { useI18n } from '@/i18n/useI18n';
 
 export default function Home() {
+  const { t } = useI18n();
   return (
     <div className="min-h-full bg-transparent relative overflow-hidden">
       {/* 背景装饰图案 */}
@@ -25,17 +28,17 @@ export default function Home() {
           {/* Hero Section */}
           <div className="text-center mb-20 slide-in">
             <div className="glass-card rounded-full px-6 py-2 mb-6 shadow-lg">
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-200">🏠 为留学生打造的租房平台</span>
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-200">🏠 {t('home.badge')}</span>
             </div>
 
             <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-slate-700 via-blue-600 to-indigo-600 dark:from-slate-200 dark:via-blue-300 dark:to-indigo-300 bg-clip-text text-transparent mb-8 leading-tight">
-              留学生租房平台
+              {t('home.heroTitle')}
             </h1>
 
             <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-200 mb-12 max-w-4xl mx-auto leading-relaxed">
-              为中国留学生提供真实、可靠的租房信息共享平台。
+              {t('home.heroDesc1')}
               <br className="hidden md:block" />
-              帮助未来的留学生快速找到合适的住房，避免信息不对称。
+              {t('home.heroDesc2')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
@@ -46,7 +49,7 @@ export default function Home() {
                 <svg className="w-6 h-6 mr-3 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                浏览房源
+                {t('home.cta.browse')}
               </Link>
               <Link
                 href="/submit"
@@ -55,7 +58,7 @@ export default function Home() {
                 <svg className="w-6 h-6 mr-3 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                分享房源
+                {t('home.cta.share')}
               </Link>
             </div>
 
@@ -63,15 +66,15 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="glass-card-strong rounded-2xl p-6 shadow-xl glass-hover">
                 <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">500+</div>
-                <div className="text-slate-700 dark:text-slate-200">房源信息</div>
+                <div className="text-slate-700 dark:text-slate-200">{t('home.stats.listings')}</div>
               </div>
               <div className="glass-card-strong rounded-2xl p-6 shadow-xl glass-hover">
                 <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">1000+</div>
-                <div className="text-slate-700 dark:text-slate-200">留学生用户</div>
+                <div className="text-slate-700 dark:text-slate-200">{t('home.stats.users')}</div>
               </div>
               <div className="glass-card-strong rounded-2xl p-6 shadow-xl glass-hover">
                 <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">50+</div>
-                <div className="text-slate-700 dark:text-slate-200">城市覆盖</div>
+                <div className="text-slate-700 dark:text-slate-200">{t('home.stats.cities')}</div>
               </div>
             </div>
           </div>
@@ -84,10 +87,8 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">真实可靠</h3>
-              <p className="text-slate-700 dark:text-slate-200 leading-relaxed">
-                所有房源信息均由已毕业留学生亲自验证，确保信息的准确性和可靠性。
-              </p>
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">{t('home.features.trust.title')}</h3>
+              <p className="text-slate-700 dark:text-slate-200 leading-relaxed">{t('home.features.trust.desc')}</p>
             </div>
 
             <div className="glass-card-strong rounded-3xl p-8 shadow-xl glass-hover">
@@ -96,10 +97,8 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">社区共享</h3>
-              <p className="text-slate-700 dark:text-slate-200 leading-relaxed">
-                建立留学生租房互助社区，大家一起分享经验，互相帮助。
-              </p>
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">{t('home.features.community.title')}</h3>
+              <p className="text-slate-700 dark:text-slate-200 leading-relaxed">{t('home.features.community.desc')}</p>
             </div>
 
             <div className="glass-card-strong rounded-3xl p-8 shadow-xl glass-hover">
@@ -108,10 +107,8 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">安全可靠</h3>
-              <p className="text-slate-700 dark:text-slate-200 leading-relaxed">
-                平台严格保护用户隐私，所有信息安全可控，避免信息泄露风险。
-              </p>
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">{t('home.features.safety.title')}</h3>
+              <p className="text-slate-700 dark:text-slate-200 leading-relaxed">{t('home.features.safety.desc')}</p>
             </div>
           </div>
 
@@ -126,18 +123,10 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-yellow-800 dark:text-yellow-200 mb-3">
-                  ⚠️ 重要免责声明
-                </h3>
+                <h3 className="text-xl font-bold text-yellow-800 dark:text-yellow-200 mb-3">⚠️ {t('home.disclaimer.title')}</h3>
                 <div className="text-yellow-700 dark:text-yellow-300 leading-relaxed">
-                  <p className="text-base mb-3">
-                    本平台仅提供信息共享服务，所有房源信息由用户自行提交。
-                    我们不对信息的准确性、完整性或时效性承担任何责任。
-                  </p>
-                  <p className="text-base">
-                    租房前请务必亲自查看房屋、核实信息，并与房东/中介签订正式合同。
-                    如遇纠纷，本平台不承担任何法律责任。
-                  </p>
+                  <p className="text-base mb-3">{t('home.disclaimer.p1')}</p>
+                  <p className="text-base">{t('home.disclaimer.p2')}</p>
                 </div>
               </div>
             </div>

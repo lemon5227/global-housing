@@ -1,4 +1,8 @@
+"use client";
+import { useI18n } from '@/i18n/useI18n';
+
 export default function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="glass-card-strong mt-0 relative overflow-hidden">
       {/* 背景装饰图案 */}
@@ -27,14 +31,14 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
-                  留学生租房平台
+                  {t('brand.title')}
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Housing for International Students</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{t('brand.subtitle')}</p>
               </div>
             </div>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 max-w-md">
-              为中国留学生提供真实、可靠的租房信息共享平台。
-              帮助未来的留学生快速找到合适的住房，避免信息不对称。
+              {t('home.heroDesc1')}
+              {t('home.heroDesc2')}
             </p>
             <div className="flex space-x-4">
               <div className="w-10 h-10 bg-white dark:bg-gray-700 rounded-lg flex items-center justify-center shadow-md hover:shadow-lg transition-shadow cursor-pointer">
@@ -57,13 +61,13 @@ export default function Footer() {
 
           {/* 快速链接 */}
           <div>
-            <h4 className="text-lg font-semibold mb-6" style={{ color: 'var(--foreground)' }}>快速链接</h4>
+            <h4 className="text-lg font-semibold mb-6" style={{ color: 'var(--foreground)' }}>{t('footer.quickLinks')}</h4>
             <ul className="space-y-3">
               <li>
                 <a href="/list" className="font-medium transition-all duration-300 hover:scale-105 inline-block"
                    style={{ color: 'var(--foreground)' }}>
                   <span className="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent font-semibold">
-                    浏览房源
+                    {t('home.cta.browse')}
                   </span>
                 </a>
               </li>
@@ -71,20 +75,20 @@ export default function Footer() {
                 <a href="/submit" className="font-medium transition-all duration-300 hover:scale-105 inline-block"
                    style={{ color: 'var(--foreground)' }}>
                   <span className="bg-gradient-to-r from-emerald-600 to-blue-600 dark:from-emerald-400 dark:to-blue-400 bg-clip-text text-transparent font-semibold">
-                    提交房源
+                    {t('home.cta.share')}
                   </span>
                 </a>
               </li>
               <li>
                 <a href="#" className="font-medium transition-all duration-300 hover:scale-105 inline-block"
                    style={{ color: 'var(--foreground)' }}>
-                  关于我们
+                  {t('footer.about')}
                 </a>
               </li>
               <li>
                 <a href="#" className="font-medium transition-all duration-300 hover:scale-105 inline-block"
                    style={{ color: 'var(--foreground)' }}>
-                  联系方式
+                  {t('footer.contact')}
                 </a>
               </li>
             </ul>
@@ -92,30 +96,30 @@ export default function Footer() {
 
           {/* 帮助支持 */}
           <div>
-            <h4 className="text-lg font-semibold mb-6" style={{ color: 'var(--foreground)' }}>帮助支持</h4>
+            <h4 className="text-lg font-semibold mb-6" style={{ color: 'var(--foreground)' }}>{t('footer.support')}</h4>
             <ul className="space-y-3">
               <li>
                 <a href="#" className="font-medium transition-all duration-300 hover:scale-105 inline-block"
                    style={{ color: 'var(--foreground)' }}>
-                  使用指南
+                  {t('footer.guide')}
                 </a>
               </li>
               <li>
                 <a href="#" className="font-medium transition-all duration-300 hover:scale-105 inline-block"
                    style={{ color: 'var(--foreground)' }}>
-                  常见问题
+                  {t('footer.faq')}
                 </a>
               </li>
               <li>
                 <a href="#" className="font-medium transition-all duration-300 hover:scale-105 inline-block"
                    style={{ color: 'var(--foreground)' }}>
-                  隐私政策
+                  {t('footer.privacy')}
                 </a>
               </li>
               <li>
                 <a href="#" className="font-medium transition-all duration-300 hover:scale-105 inline-block"
                    style={{ color: 'var(--foreground)' }}>
-                  服务条款
+                  {t('footer.terms')}
                 </a>
               </li>
             </ul>
@@ -126,26 +130,30 @@ export default function Footer() {
         <div className="border-t border-gray-200/50 dark:border-gray-700/50 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="mb-4 md:mb-0 font-medium" style={{ color: 'var(--foreground)' }}>
-              &copy; 2025 留学生租房平台 | 所有信息仅供参考，请自行核实
+              &copy; 2025 {t('brand.title')} | {t('footer.disclaimer')}
             </p>
             <div className="flex items-center space-x-6 text-sm font-medium">
               <span className="flex items-center transition-all duration-300 hover:scale-105">
                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
-                <span className="font-bold text-xl" style={{ color: 'var(--foreground)' }}>安全可靠</span>
+                <span className="font-bold text-xl" style={{ color: 'var(--foreground)' }}>{t('home.features.safety.title')}</span>
               </span>
               <span className="flex items-center transition-all duration-300 hover:scale-105">
                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="font-bold text-xl theme-card-title">真实可靠</span>
+                <span className="font-bold text-xl theme-card-title">{t('home.features.trust.title')}</span>
               </span>
               <span className="flex items-center transition-all duration-300 hover:scale-105">
                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                <span className="font-bold text-xl theme-card-title">社区共享</span>
+                <span className="font-bold text-xl theme-card-title">{t('home.features.community.title')}</span>
+          {/* 联系方式邮箱 */}
+          <div className="mt-8 text-sm text-gray-500 dark:text-gray-400">
+            {t('footer.contactEmail')}: <a href="mailto:yanw@eurecom.fr" className="underline text-blue-600 dark:text-blue-400">yanw@eurecom.fr</a>
+          </div>
               </span>
             </div>
           </div>

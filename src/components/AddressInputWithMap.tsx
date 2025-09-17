@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useI18n } from '@/i18n/useI18n';
 import dynamic from 'next/dynamic';
 
 // 动态导入 Leaflet 组件以避免 SSR 问题
@@ -42,6 +43,7 @@ function MapWithEvents({ onLocationSelect, markerPosition, zoomToPosition }: {
   markerPosition: [number, number] | null;
   zoomToPosition: [number, number] | null;
 }) {
+  const { t } = useI18n();
   const mapRef = useRef<L.Map | null>(null);
   const onLocationSelectRef = useRef(onLocationSelect);
 
@@ -97,7 +99,7 @@ function MapWithEvents({ onLocationSelect, markerPosition, zoomToPosition }: {
         <Marker position={markerPosition}>
           <Popup>
             <div className="text-center">
-              <div className="font-medium">选择的位置</div>
+              <div className="font-medium">{t('addressInput.selectedLocation')}</div>
               <div className="text-sm text-gray-600">
                 {markerPosition[0].toFixed(6)}, {markerPosition[1].toFixed(6)}
               </div>
@@ -115,9 +117,10 @@ const DynamicMapWithEvents = dynamic(() => Promise.resolve(MapWithEvents), { ssr
 export default function AddressInputWithMap({
   value,
   onChange,
-  placeholder = "输入地址或在地图上点击选择",
+  placeholder = "",
   required = false
 }: AddressInputWithMapProps) {
+  const { t } = useI18n();
   const [isLoaded, setIsLoaded] = useState(false);
   const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
   const [zoomToPosition, setZoomToPosition] = useState<[number, number] | null>(null);
@@ -334,7 +337,7 @@ export default function AddressInputWithMap({
     return (
       <div className="space-y-4">
         <div className="text-gray-500 text-sm p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-          正在加载地图...
+          {t('addressInput.loadingMap')}
         </div>
         <input
           ref={inputRef}
@@ -342,7 +345,7 @@ export default function AddressInputWithMap({
           value={value}
           onChange={handleInputChange}
           required={required}
-          placeholder={placeholder}
+          placeholder={placeholder || t('form.address.placeholder')}
           className="w-full px-4 py-3 rounded-xl border border-amber-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-slate-900 dark:text-black transition-all dark-text-force"
         />
       </div>
@@ -359,7 +362,7 @@ export default function AddressInputWithMap({
           value={value}
           onChange={handleInputChange}
           required={required}
-          placeholder={placeholder}
+          placeholder={placeholder || t('form.address.placeholder')}
           className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-slate-900 dark:text-black transition-all dark-text-force"
           autoComplete="off"
         />
@@ -435,7 +438,7 @@ export default function AddressInputWithMap({
             
             {/* 显示搜索结果数量 */}
             <div className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-50/80 dark:bg-gray-700/80 border-t border-gray-100/50 dark:border-gray-600/50 backdrop-blur-sm">
-              找到 {searchResults.length} 个相关地址
+              {t('addressInput.resultsCount', { count: searchResults.length })}
             </div>
           </div>
         )}
@@ -447,8 +450,8 @@ export default function AddressInputWithMap({
               <svg className="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <p className="text-sm">未找到包含 &quot;{value}&quot; 的地址</p>
-              <p className="text-xs mt-1">尝试输入更具体的地址信息</p>
+              <p className="text-sm">{t('addressInput.notFoundTitle', { query: value })}</p>
+              <p className="text-xs mt-1">{t('addressInput.notFoundHint')}</p>
             </div>
           </div>
         )}
@@ -463,10 +466,10 @@ export default function AddressInputWithMap({
         />
 
         <div className="absolute top-2 left-2 bg-white dark:bg-gray-800 px-2 py-1 rounded text-xs text-gray-600 dark:text-gray-300 shadow">
-          🖱️ 点击地图选择位置
+          🖱️ {t('addressInput.clickMap')}
         </div>
       </div>      <p className="text-xs text-gray-500 dark:text-gray-400">
-        💡 输入地址搜索或直接在地图上点击选择位置。数据由 OpenStreetMap 提供，完全免费。
+        💡 {t('addressInput.hint')}
       </p>
     </div>
   );

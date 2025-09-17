@@ -4,11 +4,28 @@ import { Listing } from '@/types/listing';
 import { revalidatePath } from 'next/cache';
 
 export async function POST(req: NextRequest) {
+  const cookieLocale = req.cookies.get('locale')?.value;
+  const accept = req.headers.get('accept-language') || '';
+  const pref = cookieLocale || accept.split(',')[0] || 'zh';
+  const lang: 'zh' | 'en' = pref.startsWith('en') ? 'en' : 'zh';
+  const msg = {
+    zh: {
+      missingFields: '地址、价格、联系方式为必填项',
+      submitOk: '提交成功',
+      submitFail: '提交失败'
+    },
+    en: {
+      missingFields: 'Address, price, and contact are required',
+      submitOk: 'Submitted successfully',
+      submitFail: 'Submission failed'
+    }
+  } as const;
+  const tt = msg[lang];
   try {
     const data = await req.json();
     // 校验字段
     if (!data.address || !data.price || !data.contact) {
-      return NextResponse.json({ error: '地址、价格、联系方式为必填项' }, { status: 400 });
+      return NextResponse.json({ error: tt.missingFields }, { status: 400 });
     }
     // 构造新房源对象
     const newListing: Listing = {
@@ -33,9 +50,9 @@ export async function POST(req: NextRequest) {
     revalidatePath('/list');
     revalidatePath('/');
     
-    console.log('新房源已提交，缓存已清理');
-    return NextResponse.json({ success: true, listing: newListing });
+    console.log('Listing submitted, cache revalidated');
+    return NextResponse.json({ success: true, message: tt.submitOk, listing: newListing });
   } catch (err) {
-    return NextResponse.json({ error: '提交失败', detail: String(err) }, { status: 500 });
+    return NextResponse.json({ error: tt.submitFail, detail: String(err) }, { status: 500 });
   }
 }
