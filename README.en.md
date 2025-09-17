@@ -1,9 +1,6 @@
-
-
 # Global Housing Platform
 
 > A truthful, reliable, and secure housing information sharing platform for international students.
-### [简体中文说明（点击查看）](./README.zh.md)
 
 ## Project Overview
 
@@ -30,7 +27,7 @@ This platform helps international students quickly find suitable housing. All li
 ## Project Structure
 
 ```
-
+src/
 ├── app/                    # Next.js App Router
 │   ├── api/listings/       # API routes (fetch listings)
 │   ├── list/               # Listings page

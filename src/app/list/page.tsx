@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useI18n } from '@/i18n/useI18n';
 import { Listing } from '@/types/listing';
 import PhotoCarousel from '@/components/PhotoCarousel';
@@ -11,7 +11,7 @@ export default function ListPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchListings = async () => {
+  const fetchListings = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -39,11 +39,11 @@ export default function ListPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [t]);
 
   useEffect(() => {
     fetchListings();
-  }, []);
+  }, [fetchListings]);
 
   // 刷新函数，供手动刷新使用
   const handleRefresh = () => {

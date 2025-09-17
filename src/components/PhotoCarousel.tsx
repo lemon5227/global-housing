@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { getDriveImageUrl } from '@/lib/imageUtils';
 
 interface PhotoCarouselProps {
@@ -97,10 +98,11 @@ export default function PhotoCarousel({ photos, alt }: PhotoCarouselProps) {
             </div>
           </div>
         ) : (
-          <img
+          <Image
             src={getDriveImageUrl(photos[currentIndex])}
             alt={`${alt} - 图片 ${currentIndex + 1}`}
-            className="w-full h-full object-cover cursor-pointer"
+            fill
+            className="object-cover cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
               console.log('图片被点击，准备打开大图');
@@ -187,9 +189,11 @@ export default function PhotoCarousel({ photos, alt }: PhotoCarouselProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <img
+            <Image
               src={getDriveImageUrl(photos[currentIndex])}
               alt={`${alt} - 图片 ${currentIndex + 1}`}
+              width={800}
+              height={600}
               className="max-w-full max-h-full object-contain"
               style={{ maxHeight: '90vh', maxWidth: '90vw' }}
               onError={() => {

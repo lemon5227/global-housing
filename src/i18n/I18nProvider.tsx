@@ -55,7 +55,7 @@ export const I18nProvider: React.FC<{ children: React.ReactNode; defaultLocale?:
       if (typeof window !== 'undefined') {
         const fromLocal = localStorage.getItem('app_locale') as Locale | null;
         const fromCookie = document.cookie.split('; ').find(c => c.startsWith('app_locale='))?.split('=')[1] as Locale | undefined;
-        const fromNavigator = (navigator.language || (navigator as any).userLanguage || '').toLowerCase();
+        const fromNavigator = (navigator.language || (navigator as { userLanguage?: string }).userLanguage || '').toLowerCase();
         let initial: Locale | null = null;
         if (fromLocal === 'en' || fromLocal === 'zh') initial = fromLocal;
         else if (fromCookie === 'en' || fromCookie === 'zh') initial = fromCookie;

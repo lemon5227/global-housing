@@ -34,8 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
   let messages: Record<string, string> = {};
   try {
-    const mod = await import(`@/i18n/locales/${defaultLocale}.json`);
-    messages = (mod as any).default || (mod as any);
+    const mod = await import(`@/i18n/locales/${defaultLocale}.json`) as { default: Record<string, string> };
+    messages = mod.default;
   } catch {}
 
   return {
